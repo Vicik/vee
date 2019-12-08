@@ -1,28 +1,75 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Index from '../views/Index.vue'
+import Login from '../views/Login.vue'
+import all from '../views/all.vue'
+import addG from '../views/addG.vue'
+import allG from '../views/allG.vue'
+import removeG from '../views/removeG.vue'
+import addA from '../views/addA.vue'
+import allA from '../views/allA.vue'
+import send from '../views/send.vue'
+import refund from '../views/refund.vue'
+import order from '../views/order.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'login',
+    component: Login
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/index',
+    name: 'index',
+    component: Index,
+    children:[
+      {
+        path: '',
+        component: all
+      },
+      {
+        path: '/all',
+        component: all
+      },
+      {
+        path: '/addG',
+        component: addG
+      },
+      {
+        path: '/allG',
+        component: allG
+      },
+      {
+        path: '/removeG',
+        component: removeG
+      },
+      {
+        path: '/addA',
+        component: addA
+      },
+      {
+        path: '/allA',
+        component: allA
+      },
+      {
+        path: '/send',
+        component: send
+      },
+      {
+        path: '/refund',
+        component: refund
+      },
+      {
+        path: '/order',
+        component: order
+      }
+    ]
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
