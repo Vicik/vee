@@ -1,4 +1,4 @@
-<style lang="less">
+<style lang="less" scoped>
   .allG{
     padding: 20px;
     height: 100%;
@@ -10,7 +10,7 @@
   .inline-form .el-input__inner{
     padding-right: 15px;
   }
-  .inline-form .el-row:last-child{
+  .allG .inline-form .el-row:last-child{
     text-align: center;
   }
   .allG .el-table {

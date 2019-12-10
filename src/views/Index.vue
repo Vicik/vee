@@ -1,77 +1,63 @@
 <style lang="less">
-  .index{
-    margin: 0 auto;
-    // width: 1120px;
+.el-container{
+  height: 100%;
+  .el-aside{
     height: 100%;
+    background: rgb(84, 92, 100);
+    li{
+      width: 200px;
+    }
+  }
+  .el-header{
+    background-color: #fff;
+    line-height: 60px;
+    text-align: right;
+  }
+  .el-main{
     background-color: rgb(247, 247, 247);
-    overflow: hidden;
-    .nav{
-      padding-right: 30px;
-      height: 50px;
-      line-height: 50px;
-      text-align: right;
-      background-color: #fff;
-      a{
-        margin-left: 10px;
-      }
-    }
-    .main{
-      display: flex;
-      width: 100%;
-      height: 100%;
-      .asideNav{
-        position: relative;
-        top: -50px;
-        padding-top: 50px;
-        width: 200px;
-        height: 100%;
-        box-sizing: border-box;
-        .el-menu-item{
-          min-width: 199px;
+  }
+  .el-container{
+    min-width: 940px;
+    .tabs{
+      padding: 0 10px;
+      background: #fff;
+      .el-tabs__header{
+        margin-bottom: 0;
+        .el-tabs__nav-wrap::after{
+          height: 0;
         }
-      }
-      .container{
-        padding: 20px;
-        flex: 1;
-        min-width: 940px;
-        box-sizing: border-box;
-        background-color: #F8F9FB;
-        .tabs{
+        .el-tabs__nav{
           padding: 0 10px;
-          background: #fff;
-          .el-tabs__header{
-            margin-bottom: 0;
-          }
-          .el-tabs__nav{
+          .el-tabs__active-bar{
             padding: 0 10px;
-            .el-tabs__active-bar{
-              padding: 0 10px !important;
-            }
           }
         }
       }
     }
-   }
+  }
+}
 </style>
 <template>
-  <div class="index">
-    <div class="nav">
-      <span>欢迎！</span>
-      <router-link to="/">退出账号</router-link>
-    </div>
-    <div class="main">
-      <el-menu background-color="#545c64" text-color="#fff" class="asideNav" :unique-opened="true" :default-active="active"  :default-openeds="openeds">
-        <el-menu-item index="1" @click="backToIndex">
+  <el-container>
+    <el-aside width="200px">
+      <el-menu background-color="#545c64" @select="handleSelect" text-color="#fff" class="asideNav" :unique-opened="true" :default-active="active" :default-openeds="openeds">
+        <el-menu-item index="0" @click="backToIndex">
           <span  slot="title">首页</span >
         </el-menu-item>
         <el-submenu v-for="(list, i) in lists" :key="i" :index="list.index">
           <template slot="title">
             <span>{{list.title}}</span>
           </template>
-          <el-menu-item v-for="(item, i) in list.children" :key="i" :index='item.index' @click="addTab">{{item.content}}</el-menu-item>
+          <el-menu-item v-for="item in list.children" :key="item.name" :index='item.index'>{{item.content}}</el-menu-item>
         </el-submenu>
       </el-menu>
-      <div class="container">
+    </el-aside>
+    <el-container>
+      <el-header>
+        <span>欢迎！</span>
+        <router-link to="/">退出账号</router-link>
+      </el-header>
+      <el-main>
         <el-tabs v-model="editableTabsValue" closable @tab-remove="handleTabsEdit" class="tabs" v-if="editableTabs.length">
           <el-tab-pane
             :key="item.name"
@@ -82,10 +68,9 @@
           </el-tab-pane>
         </el-tabs>
         <router-view></router-view>
-      </div>
-    </div>
-    
-  </div>
+    </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
@@ -96,60 +81,70 @@ export default {
       openeds: [],
       lists: [
         {
-          index: 'goods',
+          index: '1',
+          name: 'goods',
           title: '商品管理',
           children: [
             {
-              index: 'addG',
+              index: '1-1',
+              name: 'addG',
               content: '添加商品'
             },
             {
-              index: 'allG',
+              index: '1-2',
+              name: 'allG',
               content: '商品列表'
             }
           ]
         },
         {
-          index: 'address',
+          index: '2',
+          name: 'address',
           title: '收货地址管理',
           children: [
             {
-              index: 'addA',
+              index: '2-1',
+              name: 'addA',
               content: '添加收货地址'
             },
             {
-              index: 'allA',
+              index: '2-2',
+              name: 'allA',
               content: '收货地址列表'
             }
           ]
         },
         {
-          index: 'orders',
+          index: '3',
+          name: 'orders',
           title: '订单管理',
           children: [
             {
-              index: 'send',
+              index: '3-1',
+              name: 'send',
               content: '物流管理'
             },
             {
-              index: 'refund',
+              index: '3-2',
+              name: 'refund',
               content: '退款管理'
-            },{
-              index: 'order',
+            },
+            {
+              index: '3-3',
+              name: 'order',
               content: '全部订单'
             }
           ]
         }
       ],
       editableTabsValue: '1',
-      editableTabs: [],
-      tabIndex: '1',
+      editableTabs: [], //name: 选项卡在选项卡列表中的顺序值， label：选项卡标题， path：对应路径
+      tabIndex: '0',
       active: ''
     }
   },
   mounted() {
     this.$router.push({path:'/index'})
-    this.tabIndex = this.editableTabs.length
   },
   methods: {
     backToIndex() {
@@ -159,69 +154,61 @@ export default {
         path: '/all'
       })
     },
-    addTab(e) {
-      var content = this.getArray('index', 'index', e)
-      var tabs = this.editableTabs;
+    handleSelect(key, keyPath) {
+      var parentPath = this.lists[keyPath[0] - 1].children
+      var temPath = key.substr(key.length-1, 1)
+      var path = parentPath[temPath - 1]
+      var tabs = this.editableTabs
       var tab = tabs.filter(item => {
-        return item.title === content[0].content
+        return item.title === path.content
       })
       var newTabName = ''
       if(tab.length > 0){
         newTabName = tab[0].name
       }else {
-          newTabName = ++this.tabIndex + ''
-          this.editableTabs.push({
-            title: content[0].content,
-            name: newTabName,
-          })
+        newTabName = ++this.tabIndex + ''
+        this.editableTabs.push({
+          name: newTabName,  //选项卡在选项卡列表中的顺序值
+          title: path.content,  //选项卡标题
+          path: path.name  //对应路径
+        })
       }
       this.editableTabsValue = newTabName
       this.$router.push({
-        path: '/' + e.index
+        path: '/' + path.name
       })
     },
     handleTabsEdit(targetName) {
-      let tabs = this.editableTabs;
-      window.console.log(tabs)
+      let tabs = this.editableTabs
       if(tabs.length === 1) {
         this.editableTabsValue = targetName
         return
       }else{
-        let activeName = this.editableTabsValue;
-        if (activeName === targetName) {
-          tabs.forEach((tab, index) => {
-            if (tab.name === targetName) {
-              let nextTab = tabs[index + 1] || tabs[index - 1]
-              if (nextTab) {
-                activeName = nextTab.name
-              }
-              for(var i = 0; i < this.lists.length; i++) {
-                var list = this.lists[i].children
-                this.active = list.filter(item => item.content === nextTab.title)[0].index
-                this.$router.push({
-                  path: '/' + this.active
-                })
-                break
-              }
+        let activeName = this.editableTabsValue
+        let nextTab = {}
+        tabs.forEach((tab, index) => {
+          if (tab.name === targetName) {
+            nextTab = tabs[index + 1] || tabs[index - 1]
+            if (nextTab) {
+              activeName = nextTab.name
             }
-          })
+          }
+        })
+        this.$router.push({
+          path: '/' + nextTab.path
+        })
+        for(var i = 0; i < this.lists.length; i++) {
+          var list = this.lists[i].children
+          for(var j = 0; j < list.length; j++) {
+            if(list[j].name == nextTab.path) {
+              this.active = list[j].index
+              break
+            }
+          }
         }
-        this.editableTabsValue = activeName;
+        this.editableTabsValue = activeName
         this.editableTabs = tabs.filter(tab => tab.name !== targetName)
       }
-    },
-    getArray(target, origin, event) {
-      var content = []
-      for(var i = 0; i< this.lists.length; i++) {
-        var list = this.lists[i]
-        content = list.children.filter(item => {
-          return item[target] == event[origin]
-        })
-        if(content.length>0){
-          break
-        }
-      }
-      return content
     }
   }
 }
