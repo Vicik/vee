@@ -1,7 +1,8 @@
 <style lang="less">
 .bg{
   height: 100vh;
-  background: #316594 url('../assets/img/bg.png') no-repeat 0 100%;
+  background: #316594;
+  // background: #316594 url('../assets/img/bg.png') no-repeat 0 100%;
   .login{
     .title{
       font-size: 24px;
@@ -54,7 +55,7 @@
 <template>
   <div class="bg">
     <div class="login">
-      <h2 class="title">管理员登录</h2>
+      <h2 class="title">商家登录</h2>
       <el-form :model="form" label-position="left" class="form" :rules="rules" ref="forms" :status-icon="true" :show-message="false">
         <el-form-item prop="name">
           <el-col :span="1">
