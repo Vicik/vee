@@ -2,8 +2,9 @@
 .el-container{
   height: 100%;
   .el-aside{
+    padding-top: 60px;
     height: 100%;
-    background: rgb(84, 92, 100);
+    background: #316594;
     li{
       width: 200px;
     }
@@ -40,7 +41,7 @@
 <template>
   <el-container>
     <el-aside width="200px">
-      <el-menu background-color="#545c64" @select="handleSelect" text-color="#fff" class="asideNav" :unique-opened="true" :default-active="active" :default-openeds="openeds">
+      <el-menu background-color="#316594" @select="handleSelect" text-color="#fff" class="asideNav" :unique-opened="true" :default-active="active" :default-openeds="openeds">
         <el-menu-item index="0" @click="backToIndex">
           <span  slot="title">首页</span >
         </el-menu-item>
@@ -58,7 +59,7 @@
         <router-link to="/">退出账号</router-link>
       </el-header>
       <el-main>
-        <el-tabs v-model="editableTabsValue" closable @tab-remove="handleTabsEdit" class="tabs" v-if="editableTabs.length">
+        <el-tabs v-model="editableTabsValue" closable @tab-click="handleClick" @tab-remove="handleTabsEdit" class="tabs" v-if="editableTabs.length">
           <el-tab-pane
             :key="item.name"
             v-for="item in editableTabs"
@@ -121,8 +122,8 @@ export default {
           children: [
             {
               index: '3-1',
-              name: 'send',
-              content: '物流管理'
+              name: 'order',
+              content: '全部订单'
             },
             {
               index: '3-2',
@@ -131,8 +132,8 @@ export default {
             },
             {
               index: '3-3',
-              name: 'order',
-              content: '全部订单'
+              name: 'send',
+              content: '物流管理'
             }
           ]
         }
@@ -147,6 +148,12 @@ export default {
     this.$router.push({path:'/index'})
   },
   methods: {
+    // 点击标签页
+    handleClick(tab) {
+      var path = this.editableTabs[tab.index]
+      this.$router.push({path:'/' + path.path})
+    },
+    // 返回首页
     backToIndex() {
       this.openeds = []
       this.editableTabs = []
@@ -154,7 +161,11 @@ export default {
         path: '/all'
       })
     },
+    // 菜单激活
     handleSelect(key, keyPath) {
+      if(key==0) {
+        return
+      }
       var parentPath = this.lists[keyPath[0] - 1].children
       var temPath = key.substr(key.length-1, 1)
       var path = parentPath[temPath - 1]
@@ -178,6 +189,7 @@ export default {
         path: '/' + path.name
       })
     },
+    // 移除标签页选项卡
     handleTabsEdit(targetName) {
       let tabs = this.editableTabs
       if(tabs.length === 1) {

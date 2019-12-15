@@ -10,6 +10,9 @@
   .inline-form .el-input__inner{
     padding-right: 15px;
   }
+  .inline-form .el-select{
+    width: 178px;
+  }
   .allG .inline-form .el-row:last-child{
     text-align: center;
   }
@@ -95,9 +98,9 @@
       <el-table-column prop="counts" label="总销量(件)" width="100px"></el-table-column>
       <el-table-column prop="time" label="发布时间" width="100px"></el-table-column>
       <el-table-column label="操作" width="150px">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index)">删除</el-button>
+        <template>
+          <el-button size="mini">编辑</el-button>
+          <el-button size="mini" type="danger">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

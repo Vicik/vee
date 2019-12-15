@@ -321,8 +321,6 @@ export default {
   mounted() {
     this.drowLine()
   },
-  updated() {
-  },
   methods: {
     drowLine() {
       var myEchart1 = this.$echarts.init(this.$refs.chart1)
