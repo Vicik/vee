@@ -40,6 +40,7 @@ export default {
     return {
       edit:{
         editable: "发货",
+        noEditable: '已发货',
         delete: "删除"
       },
       allChecked: false,
@@ -85,7 +86,8 @@ export default {
             }
           ],
           buyer: 'xx',
-          status: '交易成功'
+          status: '交易成功',
+          editStatus: '-1' //0表示未发货， -1表示已发货
         },
         {
           checked: false,
@@ -101,7 +103,8 @@ export default {
             }
           ],
           buyer: 'yy',
-          status: '交易关闭'
+          status: '交易关闭',
+          editStatus: '0'
         },
         {
           checked: false,
@@ -118,6 +121,7 @@ export default {
           ],
           buyer: 'xzx',
           status: '交易成功',
+          editStatus: '0'
         },
         {
           checked: false,
@@ -134,6 +138,7 @@ export default {
           ],
           buyer: 'ax',
           status: '交易成功',
+          editStatus: '0'
         },
         {
           checked: false,
@@ -150,6 +155,7 @@ export default {
           ],
           buyer: 'xxx',
           status: '交易成功',
+          editStatus: '0'
         }
       ]
     }

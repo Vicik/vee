@@ -17,6 +17,7 @@ export default {
     return {
       edit:{
         editable: "退款",
+        noEditable: '已退款',
         delete: "删除"
       },
       formData: {
@@ -55,7 +56,8 @@ export default {
             }
           ],
           buyer: 'xx',
-          status: '交易成功'
+          status: '交易成功',
+          editStatus: '0' //0表示未发货， -1表示已发货
         },
         {
           checked: false,
@@ -71,7 +73,8 @@ export default {
             }
           ],
           buyer: 'yy',
-          status: '交易关闭'
+          status: '交易关闭',
+          editStatus: '0'
         },
         {
           checked: false,
@@ -88,6 +91,7 @@ export default {
           ],
           buyer: 'xzx',
           status: '交易成功',
+          editStatus: '0'
         },
         {
           checked: false,
@@ -104,6 +108,7 @@ export default {
           ],
           buyer: 'ax',
           status: '交易成功',
+          editStatus: '0'
         },
         {
           checked: false,
@@ -120,6 +125,7 @@ export default {
           ],
           buyer: 'xxx',
           status: '交易成功',
+          editStatus: '0'
         }
       ]
     }
